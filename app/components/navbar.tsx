@@ -9,7 +9,7 @@ async function NavBar() {
   return (
     <header>
       <nav>
-        <Link href="/"><Image alt="YC Clone" src="/logo.png" width={64} height={64} unoptimized={true}/></Link>
+        <Link href="/"><Image alt="YC Clone" src="/logo.png" width={128} height={128} unoptimized={true}/></Link>
         {session && session?.user ? (
           <div>
             <Link href="/startup/create">Create</Link>
