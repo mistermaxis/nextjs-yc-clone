@@ -7,31 +7,38 @@ async function NavBar() {
   const session = await auth();
 
   return (
-    <header>
-      <nav>
-        <Link href="/"><Image alt="YC Clone" src="/logo.png" width={128} height={128} unoptimized={true}/></Link>
-        {session && session?.user ? (
-          <div>
-            <Link href="/startup/create">Create</Link>
-            <form action={async () => {
+    <>
+      <header className="px-5 py-3 shadow-sm font-work-sans">
+        <nav className="flex justify-between items-center">
+          <Link href="/"><Image alt="YC Clone" src="/logo.png" width={64} height={64} unoptimized={true} /></Link>
+          <div className="flex flex-row items-center gap-5">
+            {session && session?.user ? (
+              <>
+                <Link href="/startup/create">Create</Link>
+                <form action={async () => {
+                  "use server";
+                  await signOut();
+                }}>
+                  <button type="submit">Log Out</button>
+                </form>
+                <div>
+                  <span>Logged in as </span>
+                  <Link href={`/users/${session?.user.id}`}>
+                    <span className="underline">{session?.user.name}</span>
+                  </Link>
+                </div>
+              </>
+            ) : <form action={async () => {
               "use server";
-              await signOut();
+              await signIn('github');
             }}>
-              <button type="submit">Log Out</button>
+              <button type="submit">Log In</button>
             </form>
-            <Link href={`/users/${session?.user.id}`}>
-              <span>{session?.user.name}</span>
-            </Link>
+            }
           </div>
-        ) : <form action={async () => {
-          "use server";
-          await signIn('github');
-        }}>
-          <button type="submit">Log In</button>
-        </form>
-        }
-      </nav>
-    </header>
+        </nav>
+      </header>
+    </>
   )
 }
 
