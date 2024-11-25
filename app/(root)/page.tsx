@@ -1,16 +1,16 @@
-export default async function Home() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/albums");
-  if (!response.ok) { throw new Error ("Failed to fetch data (albums)") }
+import SearchForm from "../../components/SearchForm";
 
-  const albums = await response.json();
+export default async function Home({ searchParams } : { searchParams: Promise<{ query?: string }> }) {
+
+  const query = (await searchParams).query;
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      {
-        albums.map((album: {id: string, title: string}) => { return (
-          <p key={album.id}>Title: {album.title}</p>
-        )})
-      }
-    </div>
+    <>
+      <section className="pink_container !bg-pink-500">
+        <h1 className="heading">Share your dreams</h1>
+        <p className="sub-heading !max-w-3xl">If you have an idea, you must pitch it, pitch it good</p>
+        <SearchForm query={query}/>
+      </section>
+    </>
   );
 }
